@@ -1,0 +1,85 @@
+spring:
+#data source
+ datasource:
+   url: jdbc:postgresql://localhost:5430/ecommerce_db
+   username: admin
+   password: admin
+   driver-class-name: org.postgresql.Driver
+
+# data jpa
+
+ jpa:
+   hibernate:
+    ddl-auto: update
+   show-sql: true
+   properties:
+    hibernate:
+       format_sql: true
+       dialect: org.hibernate.dialect.PostgreSQLDialect
+
+
+#liquibase
+ liquibase:
+    enabled: false
+    change-log: classpath:db/changelog/db.changelog-master.yaml
+
+
+#order
+ kafka:
+    bootstrap-servers: localhost:9092
+
+    consumer:
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
+
+      properties:
+        spring.deserializer.value.delegate.class: org.springframework.kafka.support.serializer.JsonDeserializer
+        spring.json.trusted.packages: com.eswar.orderservice.kafka.event
+        spring.json.use.type.headers: false 
+        
+
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        spring.json.add.type.headers: false 
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+  instance:
+    prefer-ip-address: true
+
+
+
+
+server:
+  port: 8084
+
+#actuators
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+
+
+#cors properties
+
+application:
+  cors:
+    allowed-origins:
+      - "*"
+    allowed-methods:
+      - GET
+      - POST
+    allowed-headers:
+      - Authorization
+      - Content-Type
+    allow-credentials: false

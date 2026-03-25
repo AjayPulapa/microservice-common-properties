@@ -1,0 +1,60 @@
+
+
+
+
+
+#eureka client
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+  instance:
+    prefer-ip-address: true
+
+
+
+
+#server port
+
+server:
+  port: 8082
+
+  
+#cors properties
+
+application:
+  cors:
+    allowed-origins:
+      - "*"
+    allowed-methods:
+      - GET
+      - POST
+    allowed-headers:
+      - Authorization
+      - Content-Type
+    allow-credentials: false
+
+  
+
+  #jwt token
+jwt:
+  secret: YXNkZmFzZGZhc2RmYXNkZmFzZGZhc2RmYXNkZmFzZGZhc2Rm  # base64 string (min 256 bits)
+  access:
+    expiration: 900000       # 15 minutes
+  refresh:
+    expiration: 604800000    # 7 days
+
+#actuators
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+ 
