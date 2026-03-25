@@ -1,3 +1,66 @@
+# spring:
+#   datasource:
+#     url: jdbc:postgresql://localhost:5430/ecommerce_db
+#     username: admin
+#     password: admin
+#     driver-class-name: org.postgresql.Driver
+
+#   jpa:
+#     hibernate:
+#       ddl-auto: update
+#     show-sql: true
+#     properties:
+#       hibernate:
+#         formate_sql: true
+#         dialect: org.hibernate.dialect.PostgreSQLDialect
+
+#   liquibase:
+#     enabled: false
+#     change-log: classpath:db/changelog/db.changelog-master.yaml
+    
+
+# eureka:
+#   client:
+#     service-url:
+#       defaultZone: http://localhost:8761/eureka/
+
+#   instance:
+#     prefer-ip-address: true
+
+
+
+
+# server:
+#   port: 8081
+
+
+# #actuators
+# management:
+#   endpoints:
+#     web:
+#       exposure:
+#         include: "*"
+#   endpoint:
+#     health:
+#       show-details: always
+
+# #cors properties
+
+# application:
+#   cors:
+#     allowed-origins:
+#       - "*"
+#     allowed-methods:
+#       - GET
+#       - POST
+#     allowed-headers:
+#       - Authorization
+#       - Content-Type
+#     allow-credentials: false
+
+
+
+
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5430/ecommerce_db
@@ -11,30 +74,26 @@ spring:
     show-sql: true
     properties:
       hibernate:
-        formate_sql: true
+        format_sql: true   # ✅ fixed typo (formate_sql → format_sql)
         dialect: org.hibernate.dialect.PostgreSQLDialect
+        jdbc:
+          time_zone: Asia/Kolkata   # ✅ IMPORTANT FIX
 
   liquibase:
     enabled: false
     change-log: classpath:db/changelog/db.changelog-master.yaml
-    
 
 eureka:
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka/
-
   instance:
     prefer-ip-address: true
-
-
-
 
 server:
   port: 8081
 
-
-#actuators
+# actuators
 management:
   endpoints:
     web:
@@ -44,8 +103,7 @@ management:
     health:
       show-details: always
 
-#cors properties
-
+# cors properties
 application:
   cors:
     allowed-origins:
